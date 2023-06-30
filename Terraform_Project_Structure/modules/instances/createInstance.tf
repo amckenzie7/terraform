@@ -1,8 +1,11 @@
 # Create Instance uisng Custom VPC
 #Resource key pair
 resource "aws_key_pair" "levelup_key" {
-  key_name      = "levelup_key"
-  public_key    = file(var.public_key_path)
+  key_name   = "levelup_key"
+  public_key = file(var.public_key_path)
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 #Secutiry Group for Instances
@@ -28,6 +31,7 @@ resource "aws_security_group" "allow-ssh" {
   tags = {
     Name         = "allow-ssh"
     Environmnent = var.ENVIRONMENT
+    user         = "pchandaliya"
   }
 }
 
@@ -37,7 +41,7 @@ resource "aws_instance" "my-instance" {
   instance_type = var.INSTANCE_TYPE
 
   # the VPC subnet
-  subnet_id = element(var.PUBLIC_SUBNETS, 0)
+  subnet_id         = element(var.PUBLIC_SUBNETS, 0)
   availability_zone = "${var.AWS_REGION}a"
 
   # the security group
@@ -49,5 +53,6 @@ resource "aws_instance" "my-instance" {
   tags = {
     Name         = "instance-${var.ENVIRONMENT}"
     Environmnent = var.ENVIRONMENT
+    user         = "pchandaliya"
   }
 }

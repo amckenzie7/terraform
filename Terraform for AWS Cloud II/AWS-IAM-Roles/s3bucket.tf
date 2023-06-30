@@ -6,6 +6,7 @@ resource "aws_s3_bucket" "levelup-s3bucket" {
 
   tags = {
     Name = "levelup-bucket-141"
+    user = "pchandaliya"
   }
 }
 

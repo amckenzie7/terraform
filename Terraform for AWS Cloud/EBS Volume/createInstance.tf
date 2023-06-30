@@ -1,18 +1,22 @@
 
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 #Create AWS Instance
 resource "aws_instance" "MyFirstInstnace" {
-  ami           = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = "t2.micro"
+  ami               = lookup(var.AMIS, var.AWS_REGION)
+  instance_type     = "t2.micro"
   availability_zone = "us-east-2a"
-  key_name      = aws_key_pair.levelup_key.key_name
+  key_name          = aws_key_pair.levelup_key.key_name
 
   tags = {
     Name = "custom_instance"
+    user = "pchandaliya"
   }
 }
 
@@ -24,6 +28,7 @@ resource "aws_ebs_volume" "ebs-volume-1" {
 
   tags = {
     Name = "Secondary Volume Disk"
+    user = "pchandaliya"
   }
 }
 

@@ -1,7 +1,10 @@
 
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_security_group" "allow_elk" {
@@ -47,49 +50,53 @@ resource "aws_security_group" "allow_elk" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 #Create AWS Instance
 resource "aws_instance" "MyFirstInstnace" {
-  ami           = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = "m4.large"
+  ami               = lookup(var.AMIS, var.AWS_REGION)
+  instance_type     = "m4.large"
   availability_zone = "ap-south-1a"
-  key_name      = aws_key_pair.levelup_key.key_name
+  key_name          = aws_key_pair.levelup_key.key_name
 
   vpc_security_group_ids = [
     aws_security_group.allow_elk.id,
   ]
 
   depends_on = [aws_security_group.allow_elk]
-  
+
   tags = {
     Name = "custom_instance"
+    user = "pchandaliya"
   }
 
   provisioner "file" {
-      source = "elasticsearch.yml"
-      destination = "/tmp/elasticsearch.yml"
+    source      = "elasticsearch.yml"
+    destination = "/tmp/elasticsearch.yml"
   }
 
   provisioner "file" {
-      source = "kibana.yml"
-      destination = "/tmp/kibana.yml"
+    source      = "kibana.yml"
+    destination = "/tmp/kibana.yml"
   }
 
   provisioner "file" {
-      source = "apache-01.conf"
-      destination = "/tmp/apache-01.conf"
+    source      = "apache-01.conf"
+    destination = "/tmp/apache-01.conf"
   }
 
-    provisioner "file" {
-      source = "installELK.sh"
-      destination = "/tmp/installELK.sh"
+  provisioner "file" {
+    source      = "installELK.sh"
+    destination = "/tmp/installELK.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
       "chmod +x    /tmp/installELK.sh",
-      "sudo sed -i -e 's/\r$//' /tmp/installELK.sh",  # Remove the spurious CR characters.
+      "sudo sed -i -e 's/\r$//' /tmp/installELK.sh", # Remove the spurious CR characters.
       "sudo /tmp/installELK.sh",
     ]
   }
@@ -104,8 +111,11 @@ resource "aws_instance" "MyFirstInstnace" {
 
 resource "aws_eip" "ip" {
   instance = aws_instance.MyFirstInstnace.id
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 output "public_ip" {
-  value = aws_instance.MyFirstInstnace.public_ip 
+  value = aws_instance.MyFirstInstnace.public_ip
 }

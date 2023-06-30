@@ -10,8 +10,9 @@ resource "aws_vpc" "aws_vpc_levelup" {
   assign_generated_ipv6_cidr_block = var.enable_ipv6
 
   tags = {
-      name = var.vpcname
-      environment = var.vpcenvironment
+    name        = var.vpcname
+    environment = var.vpcenvironment
+    user        = "pchandaliya"
   }
-  
+
 }

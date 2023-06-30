@@ -1,7 +1,10 @@
 
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_instance" "MyFirstInstnace" {
@@ -11,17 +14,18 @@ resource "aws_instance" "MyFirstInstnace" {
 
   tags = {
     Name = "custom_instance"
+    user = "pchandaliya"
   }
 
   provisioner "file" {
-      source = "installNginx.sh"
-      destination = "/tmp/installNginx.sh"
+    source      = "installNginx.sh"
+    destination = "/tmp/installNginx.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/installNginx.sh",
-      "sudo sed -i -e 's/\r$//' /tmp/installNginx.sh",  # Remove the spurious CR characters.
+      "sudo sed -i -e 's/\r$//' /tmp/installNginx.sh", # Remove the spurious CR characters.
       "sudo /tmp/installNginx.sh",
     ]
   }
