@@ -14,5 +14,6 @@ module "vpc" {
 
   tags = {
     Name = "${var.cluster-name}-vpc"
+    user = "pchandaliya"
   }
 }

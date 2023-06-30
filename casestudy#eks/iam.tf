@@ -15,6 +15,9 @@ resource "aws_iam_role" "eks_cluster" {
   ]
 }
 POLICY
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
@@ -44,6 +47,9 @@ resource "aws_iam_role" "eks_nodes" {
   ]
 }
 POLICY
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {

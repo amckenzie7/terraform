@@ -6,5 +6,6 @@ resource "aws_instance" "MyFirstInstnace" {
 
   tags = {
     Name = "demoinstnce-${count.index}"
+    user = "pchandaliya"
   }
 }
