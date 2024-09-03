@@ -3,7 +3,7 @@ resource "aws_elb" "levelup-elb" {
   name            = "levelup-elb"
   subnets         = [aws_subnet.levelupvpc-public-1.id, aws_subnet.levelupvpc-public-2.id]
   security_groups = [aws_security_group.levelup-elb-securitygroup.id]
-  
+
   listener {
     instance_port     = 80
     instance_protocol = "http"
@@ -25,6 +25,7 @@ resource "aws_elb" "levelup-elb" {
 
   tags = {
     Name = "levelup-elb"
+    user = "pchandaliya"
   }
 }
 
@@ -33,7 +34,7 @@ resource "aws_security_group" "levelup-elb-securitygroup" {
   vpc_id      = aws_vpc.levelupvpc.id
   name        = "levelup-elb-sg"
   description = "security group for Elastic Load Balancer"
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -50,6 +51,7 @@ resource "aws_security_group" "levelup-elb-securitygroup" {
 
   tags = {
     Name = "levelup-elb-sg"
+    user = "pchandaliya"
   }
 }
 
@@ -58,7 +60,7 @@ resource "aws_security_group" "levelup-instance" {
   vpc_id      = aws_vpc.levelupvpc.id
   name        = "levelup-instance"
   description = "security group for instances"
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -82,5 +84,6 @@ resource "aws_security_group" "levelup-instance" {
 
   tags = {
     Name = "levelup-instance"
+    user = "pchandaliya"
   }
 }
