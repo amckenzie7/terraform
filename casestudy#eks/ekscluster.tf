@@ -9,12 +9,13 @@ resource "aws_eks_cluster" "aws_eks" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,  
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.AmazonEKSServicePolicy,
   ]
 
   tags = {
     Name = "EKS_Cluster_LevelUp"
+    user = "pchandaliya"
   }
 }
 
@@ -37,4 +38,7 @@ resource "aws_eks_node_group" "node" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
+  tags = {
+    user = "pchandaliya"
+  }
 }

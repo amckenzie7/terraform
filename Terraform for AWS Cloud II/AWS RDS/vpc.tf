@@ -1,13 +1,14 @@
 #Create AWS VPC
 resource "aws_vpc" "levelupvpc" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
+  cidr_block           = "10.0.0.0/16"
+  instance_tenancy     = "default"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
 
   tags = {
     Name = "levelupvpc"
+    user = "pchandaliya"
   }
 }
 
@@ -20,6 +21,7 @@ resource "aws_subnet" "levelupvpc-public-1" {
 
   tags = {
     Name = "levelupvpc-public-1"
+    user = "pchandaliya"
   }
 }
 
@@ -31,6 +33,7 @@ resource "aws_subnet" "levelupvpc-public-2" {
 
   tags = {
     Name = "levelupvpc-public-2"
+    user = "pchandaliya"
   }
 }
 
@@ -42,6 +45,7 @@ resource "aws_subnet" "levelupvpc-public-3" {
 
   tags = {
     Name = "levelupvpc-public-3"
+    user = "pchandaliya"
   }
 }
 
@@ -54,6 +58,7 @@ resource "aws_subnet" "levelupvpc-private-1" {
 
   tags = {
     Name = "levelupvpc-private-1"
+    user = "pchandaliya"
   }
 }
 
@@ -65,6 +70,7 @@ resource "aws_subnet" "levelupvpc-private-2" {
 
   tags = {
     Name = "levelupvpc-private-2"
+    user = "pchandaliya"
   }
 }
 
@@ -76,6 +82,7 @@ resource "aws_subnet" "levelupvpc-private-3" {
 
   tags = {
     Name = "levelupvpc-private-3"
+    user = "pchandaliya"
   }
 }
 
@@ -85,6 +92,7 @@ resource "aws_internet_gateway" "levelup-gw" {
 
   tags = {
     Name = "levelup-gw"
+    user = "pchandaliya"
   }
 }
 
@@ -98,6 +106,7 @@ resource "aws_route_table" "levelup-public" {
 
   tags = {
     Name = "levelup-public-1"
+    user = "pchandaliya"
   }
 }
 

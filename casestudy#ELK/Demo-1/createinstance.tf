@@ -1,7 +1,10 @@
 
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_security_group" "allow_elk" {
@@ -47,30 +50,37 @@ resource "aws_security_group" "allow_elk" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 #Create AWS Instance
 resource "aws_instance" "MyFirstInstnace" {
-  ami           = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = "m4.large"
+  ami               = lookup(var.AMIS, var.AWS_REGION)
+  instance_type     = "m4.large"
   availability_zone = "ap-south-1a"
-  key_name      = aws_key_pair.levelup_key.key_name
+  key_name          = aws_key_pair.levelup_key.key_name
 
   vpc_security_group_ids = [
     aws_security_group.allow_elk.id,
   ]
 
   depends_on = [aws_security_group.allow_elk]
-  
+
   tags = {
     Name = "custom_instance"
+    user = "pchandaliya"
   }
 }
 
 resource "aws_eip" "ip" {
   instance = aws_instance.MyFirstInstnace.id
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 output "public_ip" {
-  value = aws_instance.MyFirstInstnace.public_ip 
+  value = aws_instance.MyFirstInstnace.public_ip
 }
